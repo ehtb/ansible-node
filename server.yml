@@ -1,0 +1,14 @@
+---
+- name: "Node Server: Install nginx, mongodb, nodejs"
+  hosts: web:&{{ env }}
+  become: yes
+
+  roles:
+    - { role: common, tags: [common] }
+    - { role: ufw, tags: [ufw] }
+    - { role: nginx, tags: [nginx] }
+    - { role: mongodb, tags: [mongodb] }
+    - { role: nodejs, tags: [nodejs] }
+    - { role: pm2, tags: [pm2] }
+    - { role: letsencrypt, tags: [letsencrypt] }
+    - { role: application, tags: [application] }

@@ -1,0 +1,13 @@
+logrotate_scripts:
+  - name: nginx
+    path: "{{ www_root }}/**/*.log"
+    options:
+      - weekly
+      - size 25M
+      - rotate 7
+      - missingok
+      - compress
+      - delaycompress
+      - copytruncate
+    scripts:
+      - postrotate: service nginx rotate

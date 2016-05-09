@@ -1,0 +1,3 @@
+env: development
+www_root: /srv/www
+web_user: vagrant

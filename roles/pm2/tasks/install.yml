@@ -1,0 +1,21 @@
+---
+
+- name: Install packages
+  sudo: yes
+  npm:
+    name: pm2
+    global: yes
+    version: "{{ pm2_version | default(omit) }}"
+  notify: restart pm2
+
+- name: installing startup script
+  sudo: yes
+  command: >
+    pm2 startup {{ pm2_startup }}
+
+- name: create pm2 app config
+  template:
+    src: "pm2-config.yml.j2"
+    dest: "{{ site.path }}/pm.yml"
+  tags: pm2
+  when: pm2_create_config

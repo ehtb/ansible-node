@@ -1,0 +1,6 @@
+letsencrypt_certs:
+  -
+    name: "think_of_something_unique_or_nice_here"
+    keypath: "/etc/ssl/private/{{site.name}}.key"
+    certpath: "/etc/ssl/certs/{{site.name}}.cert"
+    host: "{{site.host}}"

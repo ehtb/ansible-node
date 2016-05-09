@@ -1,0 +1,43 @@
+---
+- name: Create web root
+  file:
+    path: "{{ www_root }}"
+    owner: "{{ web_user }}"
+    group: "{{ web_group }}"
+    mode: 0755
+    state: directory
+
+- name: Create logs folder of sites
+  file:
+    path: "{{ www_root }}/{{ site.name }}/logs"
+    owner: "{{ web_user }}"
+    group: "{{ web_group }}"
+    mode: 0755
+    state: directory
+
+- include: nginx.yml
+  tags: setup-nginx
+
+# - name: Enable Server
+#   file:
+#     src: "{{ nginx_path }}/sites-available/{{ site.name }}.conf"
+#     dest: "{{ nginx_path }}/sites-enabled/{{ site.name }}.conf"
+#     owner: root
+#     group: root
+#     state: link
+#   notify: reload nginx
+#
+- name: Run local npm install (only local development)
+  command: npm install
+  connection: local
+  become: false #never become on local
+  tags: ttk
+  args:
+    chdir: "{{site.local_path}}"
+  when: "'development' in group_names"
+
+- name: start app with pm2
+  command: pm2 start pm.yml
+  tags: pm2
+  args:
+    chdir: "{{ site.path }}"

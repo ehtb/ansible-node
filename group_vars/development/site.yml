@@ -1,0 +1,11 @@
+site:
+  name: node.dev
+  host: node.dev
+  local_path: ../node.dev
+  path: "{{www_root}}/node.dev/current"
+  admin_email: admin@node.dev
+  ssl:
+    enabled: false
+    provider: self-signed
+  cache:
+    enabled: false

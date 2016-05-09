@@ -1,0 +1,29 @@
+---
+- name: Copy SSL cert
+  copy:
+    src: "{{ letsencrypt_certs.certpath }}"
+    dest: "{{ nginx_ssl_path }}/{{ letsencrypt_certs.certpath | basename }}"
+    mode: 0640
+  when: site.ssl.enabled
+
+- name: Copy SSL key
+  copy:
+    src: "{{ letsencrypt_certs.keypath }}"
+    dest: "{{ nginx_ssl_path }}/{{ letsencrypt_certs.keypath | basename }}"
+    mode: 0600
+  when: site.ssl.enabled
+
+- name: Create Server configuration
+  template:
+    src: "site.conf.j2"
+    dest: "{{ nginx_path }}/sites-available/{{ site.name }}.conf"
+  notify: reload nginx
+
+- name: Enable Server
+  file:
+    src: "{{ nginx_path }}/sites-available/{{ site.name }}.conf"
+    dest: "{{ nginx_path }}/sites-enabled/{{ site.name }}.conf"
+    owner: root
+    group: root
+    state: link
+  notify: reload nginx

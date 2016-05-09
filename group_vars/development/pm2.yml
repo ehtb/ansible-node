@@ -1,0 +1,6 @@
+pm2_apps:
+  - run: pm.yml
+    args: --name console_error
+    path: "{{ site.path }}"
+    env:
+      NODE_ENV: development

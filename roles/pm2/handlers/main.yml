@@ -1,0 +1,7 @@
+---
+
+- name: ensure pm2 service is started
+  service:
+    name: "{{ pm2_service_name }}"
+    state: started
+    enabled: yes

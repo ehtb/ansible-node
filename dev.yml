@@ -1,0 +1,15 @@
+---
+- name: "Node Server: Install nginx, mongodb, nodejs"
+  hosts: web:&development
+  become: yes
+  remote_user: vagrant
+
+  roles:
+    - { role: common, tags: [common] }
+    - { role: security, tags: [security] }
+    - { role: iptables, tags: [iptables] }
+    - { role: nginx, tags: [nginx] }
+    - { role: mongodb, tags: [mongodb] }
+    - { role: nodejs, tags: [nodejs] }
+    - { role: pm2, tags: [pm2] }
+    - { role: application, tags: [application] }

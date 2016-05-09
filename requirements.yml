@@ -1,0 +1,19 @@
+- name: logrotate
+  src: nickhammond.logrotate
+  version: fc3ea4
+
+- name: swapfile
+  src: kamaln7.swapfile
+  version: 0.4
+
+- name: iptables
+  src: geerlingguy.firewall
+
+- name: security
+  src: geerlingguy.security
+
+- name: mongodb
+  src: Stouts.mongodb
+
+- name: letsencrypt
+  src: andreaswolf.letsencrypt
